@@ -1,0 +1,38 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class LaserCat : MonoBehaviour
+{
+  
+    public GameObject Laser; // 2초후 발사할 찐 레이져 
+
+    LineRenderer lr;
+
+    void Start ( )
+    {
+        lr = Laser.GetComponent<LineRenderer> ( );
+        lr.enabled = false;
+       
+    }
+
+    void Update ( )
+    {
+        if ( lr.enabled )
+        {
+            Physics.Raycast ( transform.position, transform.forward, out RaycastHit hit );
+
+            if ( hit.transform.CompareTag ( "Player" ) || hit.transform.CompareTag ( "Wall" ) )
+            {
+                //HitEffect.SetActive ( true );
+                //HitEffect.transform.position = hit.point;
+
+                if ( hit.transform.CompareTag ( "Player" ) )
+                {
+                    cPlayerHPBar.GetInstance._CurrntHP -= Time.deltaTime * 250f;// LaserDMG;
+                }
+            }
+           
+        }
+    }
+}
